@@ -1,0 +1,10 @@
+flowchart LR
+  H[Host laptop<br/>VirtualBox] --- N((Host-only network<br/>192.168.56.0/24))
+  N --- K[Kali Linux<br/>Attacker .10]
+  N --- M[Metasploitable 2<br/>Target .20]
+  N --- D[DVWA web target<br/>.30]
+  N --- W[Wazuh / Security Onion<br/>Monitor .40]
+  K -. scans / attacks .-> M
+  K -. scans / attacks .-> D
+  M -. logs .-> W
+  D -. logs .-> W

@@ -1,0 +1,26 @@
+flowchart LR
+  subgraph Untrusted[Internet - untrusted]
+    U[Client / Attacker]
+  end
+  subgraph DMZ[Trust boundary 1 - DMZ]
+    P[Reverse proxy / WAF ingress]
+  end
+  subgraph Core[Trust boundary 2 - Internal]
+    F[Feature extractor]
+    M[ML classifier]
+    R[Rule engine]
+    L[(Log store)]
+    A[Admin dashboard]
+  end
+  subgraph Train[Trust boundary 3 - ML pipeline]
+    T[Training pipeline]
+    D[(Training data)]
+    MS[(Model store)]
+  end
+  S[Protected web app]
+  U --> P --> F --> M --> R
+  R -->|allow| S
+  R -->|block| L
+  R --> L
+  L --> A
+  L --> D --> T --> MS --> M
